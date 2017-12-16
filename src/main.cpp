@@ -92,8 +92,8 @@ int main() {
           double psi = j[1]["psi"];
           double v = j[1]["speed"];
           //convert ptsx and ptsy into eigen vectors
-          Eigen::VectorXd xvals(ptsx.data());
-          Eigen::VectorXd yvals(ptsy.data());
+          Eigen::VectorXd xvals = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(ptsx.data(), ptsx.size());
+          Eigen::VectorXd yvals = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(ptsy.data(), ptsy.size());
           //obtain the coefficients from a fitted polynomial to the points
           auto coeffs = polyfit(xvals,yvals,3);
           //obtain the cte, which is the difference between py and polynomial
