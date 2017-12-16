@@ -91,6 +91,20 @@ int main() {
           double py = j[1]["y"];
           double psi = j[1]["psi"];
           double v = j[1]["speed"];
+          //obtain the coefficients from a fitted polynomial to the points
+          auto coeffs = polyfit(ptsx,ptsy,3);
+          //obtain the cte, which is the difference between py and polynomial
+          double cte = polyeval(coeffs, px)-py;
+          //obtain the orientation error. To do this, the derivative of the polynomial
+          //must be found. For a 3rd degree polynomial of coefficients [c0,c1,c2,c3],
+          //the derivative will be a polynomial [c1,2c2,3c3].
+          Eigen::VectorXd der_coeffs(3);
+          der_coeffs << coeffs[1],2*coeffs[2],3*coeffs[3];
+          //calculate the desired orientation, psi - arctan(f'(x))
+          double oe = psi - atan(polyeval(der_coeffs,px));
+          //set up state vector
+          Eigen::VectorXd state(6);
+            state << px, py, psi, v, cte, oe;
 
           /*
           * TODO: Calculate steering angle and throttle using MPC.
@@ -100,6 +114,12 @@ int main() {
           */
           double steer_value;
           double throttle_value;
+          //solve the mpc for the next state
+          auto vars = mpc.Solve(state, coeffs);
+          //use the 6th and 7th values as the steer and throttle values
+          steer_value = vars[6];
+          throttle_value = vars[7];
+
 
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
@@ -107,7 +127,7 @@ int main() {
           msgJson["steering_angle"] = steer_value;
           msgJson["throttle"] = throttle_value;
 
-          //Display the MPC predicted trajectory 
+          //Display the MPC predicted trajectory
           vector<double> mpc_x_vals;
           vector<double> mpc_y_vals;
 
