@@ -91,8 +91,11 @@ int main() {
           double py = j[1]["y"];
           double psi = j[1]["psi"];
           double v = j[1]["speed"];
+          //convert ptsx and ptsy into eigen vectors
+          Eigen::VectorXd xvals(ptsx.data());
+          Eigen::VectorXd yvals(ptsy.data());
           //obtain the coefficients from a fitted polynomial to the points
-          auto coeffs = polyfit(ptsx,ptsy,3);
+          auto coeffs = polyfit(xvals,yvals,3);
           //obtain the cte, which is the difference between py and polynomial
           double cte = polyeval(coeffs, px)-py;
           //obtain the orientation error. To do this, the derivative of the polynomial
