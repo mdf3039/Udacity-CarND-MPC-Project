@@ -100,6 +100,7 @@ int main() {
           double px = j[1]["x"];
           double py = j[1]["y"];
           double psi = j[1]["psi"];
+          //the given psi is between [0,2pi]. set boundaries @ [-pi,pi]
           double v = j[1]["speed"];
           std::cout<<"Car Position: ("<<px<<","<<py<<")"<<std::endl;
           std::cout<<"Psi: "<<psi<<std::endl;
@@ -117,7 +118,7 @@ int main() {
           der_coeffs << coeffs[1],2*coeffs[2],3*coeffs[3];
           //calculate the orientation error using the
           //desired orientation, psi - arctan(f'(x))
-          double oe = psi - atan(polyeval(der_coeffs,py));
+          double oe = CppAD::atan(CppAD::tan(psi)) - atan(polyeval(der_coeffs,py));
           //set up state vector
           Eigen::VectorXd state(6);
           state << px, py, psi, v, cte, oe;
