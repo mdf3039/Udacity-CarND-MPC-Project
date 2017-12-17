@@ -118,7 +118,7 @@ int main() {
           der_coeffs << coeffs[1],2*coeffs[2],3*coeffs[3];
           //calculate the orientation error using the
           //desired orientation, psi - arctan(f'(x))
-          double oe = CppAD::atan(CppAD::tan(psi)) - atan(polyeval(der_coeffs,py));
+          double oe = atan(tan(psi)) - atan(polyeval(der_coeffs,py));
           //set up state vector
           Eigen::VectorXd state(6);
           state << px, py, psi, v, cte, oe;
