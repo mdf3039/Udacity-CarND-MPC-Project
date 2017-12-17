@@ -87,18 +87,18 @@ int main() {
           // j[1] is the data JSON object
           vector<double> ptsx = j[1]["ptsx"];
           vector<double> ptsy = j[1]["ptsy"];
-          cout<<"Number of waypointsX: "<<ptsx.size()<<endl;
-          cout<<"Minimum of waypointsX: "<<std::min_element(ptsx.begin(), ptsx.end())<<endl;
-          cout<<"Maximum of waypointsX: "<<std::max_element(ptsx.begin(), ptsx.end())<<endl;
-          cout<<"Number of waypointsY: "<<ptsy.size()<<endl;
-          cout<<"Minimum of waypointsY: "<<std::min_element(ptsy.begin(), ptsy.end())<<endl;
-          cout<<"Maximum of waypointsY: "<<std::max_element(ptsy.begin(), ptsy.end())<<endl;
+          std::cout<<"Number of waypointsX: "<<ptsx.size()<<std::endl;
+          std::cout<<"Minimum of waypointsX: "<<std::min_element(ptsx.begin(), ptsx.end())<<std::endl;
+          std::cout<<"Maximum of waypointsX: "<<std::max_element(ptsx.begin(), ptsx.end())<<std::endl;
+          std::cout<<"Number of waypointsY: "<<ptsy.size()<<std::endl;
+          std::cout<<"Minimum of waypointsY: "<<std::min_element(ptsy.begin(), ptsy.end())<<std::endl;
+          std::cout<<"Maximum of waypointsY: "<<std::max_element(ptsy.begin(), ptsy.end())<<std::endl;
           double px = j[1]["x"];
           double py = j[1]["y"];
           double psi = j[1]["psi"];
           double v = j[1]["speed"];
-          cout<<"Car Position: ("<<px<<","<<py<<")"<<endl;
-          cout<<"Psi: "<<psi<<endl;
+          std::cout<<"Car Position: ("<<px<<","<<py<<")"<<std::endl;
+          std::cout<<"Psi: "<<psi<<std::endl;
           //convert ptsx and ptsy into eigen vectors
           Eigen::VectorXd xvals = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(ptsx.data(), ptsx.size());
           Eigen::VectorXd yvals = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(ptsy.data(), ptsy.size());
