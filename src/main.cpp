@@ -115,7 +115,8 @@ int main() {
           //the derivative will be a polynomial [c1,2c2,3c3].
           Eigen::VectorXd der_coeffs(3);
           der_coeffs << coeffs[1],2*coeffs[2],3*coeffs[3];
-          //calculate the desired orientation, psi - arctan(f'(x))
+          //calculate the orientation error using the
+          //desired orientation, psi - arctan(f'(x))
           double oe = psi - atan(polyeval(der_coeffs,py));
           //set up state vector
           Eigen::VectorXd state(6);
