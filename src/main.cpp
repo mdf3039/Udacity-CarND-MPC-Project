@@ -118,9 +118,9 @@ int main() {
           Eigen::VectorXd xvals = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(ptsx.data(), ptsx.size());
           Eigen::VectorXd yvals = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(ptsy.data(), ptsy.size());
           //obtain the coefficients from a fitted polynomial to the points
-          auto coeffs = polyfit(yvals,xvals,3);
+          auto coeffs = polyfit(xvals,yvals,3);
           //obtain the cte, which is the difference between px and polynomial
-          double cte = polyeval(coeffs, py)-px;
+          double cte = polyeval(coeffs, px)-py;
           //obtain the orientation error. To do this, the derivative of the polynomial
           //must be found. For a 3rd degree polynomial of coefficients [c0,c1,c2,c3],
           //the derivative will be a polynomial [c1,2c2,3c3].
@@ -128,7 +128,7 @@ int main() {
           der_coeffs << coeffs[1],2*coeffs[2],3*coeffs[3];
           //calculate the orientation error using the
           //desired orientation, psi - arctan(f'(x))
-          double oe = psi - atan(polyeval(der_coeffs,py));
+          double oe = psi - atan(polyeval(der_coeffs,px));
           //set up state vector
           Eigen::VectorXd state(6);
           state << px, py, psi, v, cte, oe;
