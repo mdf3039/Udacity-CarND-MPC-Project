@@ -178,7 +178,7 @@ int main() {
 
             mpc_x_vals.push_back(vars[0]);
             mpc_y_vals.push_back(vars[1]);
-            poly_x_vals.push_back(polyeval(coeffs, vars[1]));
+            poly_x_vals.push_back(polyeval(coeffs, i+1));
             /*psi_vals.push_back(vars[2]);
             v_vals.push_back(vars[3]);
             cte_vals.push_back(vars[4]);
