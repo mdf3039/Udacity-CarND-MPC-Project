@@ -139,13 +139,23 @@ int main() {
           * Both are in between [-1, 1].
           *
           */
+          int N = 30;
           double steer_value;
           double throttle_value;
           //solve the mpc for the next state
-          auto vars = mpc.Solve(state, coeffs);
+          auto mpc_sol = mpc.Solve(state, coeffs);
+          //separate the mpc solution. for all x,y,psi,v,cte,oe,delta,acc values
+          std::vector<double> est_x = std::vector(mpc_sol.begin()+1 , mpc_sol.begin()+N+1);
+          std::vector<double> est_y = std::vector(mpc_sol.begin()+N+1 , mpc_sol.begin()+2*N+1);
+          std::vector<double> est_psi = std::vector(mpc_sol.begin()+2*N+1 , mpc_sol.begin()+3*N+1);
+          std::vector<double> est_v = std::vector(mpc_sol.begin()+3*N+1 , mpc_sol.begin()+4*N+1);
+          std::vector<double> est_cte = std::vector(mpc_sol.begin()+4*N+1 , mpc_sol.begin()+5*N+1);
+          std::vector<double> est_oe = std::vector(mpc_sol.begin()+5*N+1 , mpc_sol.begin()+6*N+1);
+          std::vector<double> est_delta = std::vector(mpc_sol.begin()+6*N+1 , mpc_sol.begin()+7*N);
+          std::vector<double> est_a = std::vector(mpc_sol.begin()+7*N , mpc_sol.end());
           //use the 6th and 7th values as the steer and throttle values
-          steer_value = vars[6];
-          throttle_value = vars[7];
+          steer_value = est_delta[0];
+          throttle_value = est_a[0];
           std::cout<<"Steer Value: "<<steer_value<<endl;
           std::cout<<"Throttle Value: "<<throttle_value<<endl;
           std::cout<<"Steer Value/25deg: "<<steer_value/deg2rad(25)<<endl;
@@ -158,57 +168,21 @@ int main() {
           msgJson["throttle"] = throttle_value;
 
           //Display the MPC predicted trajectory
-          vector<double> mpc_x_vals;
-          vector<double> mpc_y_vals;
-          vector<double> poly_x_vals;
-          /*std::vector<double> psi_vals;
-          std::vector<double> v_vals;
-          std::vector<double> cte_vals;
-          std::vector<double> epsi_vals;
-          std::vector<double> delta_vals;
-          std::vector<double> a_vals;*/
-
+          vector<double> mpc_x_vals = est_x;
+          vector<double> mpc_y_vals = est_y;
 
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Green line
-          for (size_t i = 0; i < 5; i++) {
-            std::cout << "Iteration " << i << std::endl;
-
-            auto vars = mpc.Solve(state, coeffs);
-
-            mpc_x_vals.push_back(vars[0]);
-            mpc_y_vals.push_back(vars[1]);
-            poly_x_vals.push_back(polyeval(coeffs, i+1));
-            /*psi_vals.push_back(vars[2]);
-            v_vals.push_back(vars[3]);
-            cte_vals.push_back(vars[4]);
-            epsi_vals.push_back(vars[5]);
-
-            delta_vals.push_back(vars[6]);
-            a_vals.push_back(vars[7]);*/
-
-            state << vars[0], vars[1], vars[2], vars[3], vars[4], vars[5];
-            /*std::cout << "x = " << vars[0] << std::endl;
-            std::cout << "y = " << vars[1] << std::endl;
-            std::cout << "psi = " << vars[2] << std::endl;
-            std::cout << "v = " << vars[3] << std::endl;
-            std::cout << "cte = " << vars[4] << std::endl;
-            std::cout << "epsi = " << vars[5] << std::endl;
-            std::cout << "delta = " << vars[6] << std::endl;
-            std::cout << "a = " << vars[7] << std::endl;
-            std::cout << std::endl;*/
-          }
 
           msgJson["mpc_x"] = mpc_x_vals;
           msgJson["mpc_y"] = mpc_y_vals;
 
           //Display the waypoints/reference line
-          vector<double> next_x_vals = poly_x_vals;
-          vector<double> next_y_vals = mpc_y_vals;
+          vector<double> next_x_vals = ptsx;
+          vector<double> next_y_vals = ptsy;
 
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Yellow line
-
 
           msgJson["next_x"] = next_x_vals;
           msgJson["next_y"] = next_y_vals;
