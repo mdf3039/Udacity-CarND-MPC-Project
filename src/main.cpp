@@ -153,6 +153,7 @@ int main() {
           std::vector<double> est_oe = std::vector(mpc_sol.begin()+5*N+1 , mpc_sol.begin()+6*N+1);
           std::vector<double> est_delta = std::vector(mpc_sol.begin()+6*N+1 , mpc_sol.begin()+7*N);
           std::vector<double> est_a = std::vector(mpc_sol.begin()+7*N , mpc_sol.end());
+          std::cout<<"Estimations of X: "<<est_x<<endl;
           //use the 6th and 7th values as the steer and throttle values
           steer_value = est_delta[0];
           throttle_value = est_a[0];
