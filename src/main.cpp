@@ -145,14 +145,14 @@ int main() {
           //solve the mpc for the next state
           auto mpc_sol = mpc.Solve(state, coeffs);
           //separate the mpc solution. for all x,y,psi,v,cte,oe,delta,acc values
-          std::vector<double> est_x = std::vector(mpc_sol.begin()+1 , mpc_sol.begin()+N+1);
-          std::vector<double> est_y = std::vector(mpc_sol.begin()+N+1 , mpc_sol.begin()+2*N+1);
-          std::vector<double> est_psi = std::vector(mpc_sol.begin()+2*N+1 , mpc_sol.begin()+3*N+1);
-          std::vector<double> est_v = std::vector(mpc_sol.begin()+3*N+1 , mpc_sol.begin()+4*N+1);
-          std::vector<double> est_cte = std::vector(mpc_sol.begin()+4*N+1 , mpc_sol.begin()+5*N+1);
-          std::vector<double> est_oe = std::vector(mpc_sol.begin()+5*N+1 , mpc_sol.begin()+6*N+1);
-          std::vector<double> est_delta = std::vector(mpc_sol.begin()+6*N+1 , mpc_sol.begin()+7*N);
-          std::vector<double> est_a = std::vector(mpc_sol.begin()+7*N , mpc_sol.end());
+          std::vector<double> est_x = std::vector<double>(mpc_sol.begin()+1 , mpc_sol.begin()+N+1);
+          std::vector<double> est_y = std::vector<double>(mpc_sol.begin()+N+1 , mpc_sol.begin()+2*N+1);
+          std::vector<double> est_psi = std::vector<double>(mpc_sol.begin()+2*N+1 , mpc_sol.begin()+3*N+1);
+          std::vector<double> est_v = std::vector<double>(mpc_sol.begin()+3*N+1 , mpc_sol.begin()+4*N+1);
+          std::vector<double> est_cte = std::vector<double>(mpc_sol.begin()+4*N+1 , mpc_sol.begin()+5*N+1);
+          std::vector<double> est_oe = std::vector<double>(mpc_sol.begin()+5*N+1 , mpc_sol.begin()+6*N+1);
+          std::vector<double> est_delta = std::vector<double>(mpc_sol.begin()+6*N+1 , mpc_sol.begin()+7*N);
+          std::vector<double> est_a = std::vector<double>(mpc_sol.begin()+7*N , mpc_sol.end());
           std::cout<<"Estimations of X: ";
           std::copy(est_x.begin(), est_x.end(), std::ostream_iterator<double>(std::cout, ", "));
           std::cout<<" "<<endl;
