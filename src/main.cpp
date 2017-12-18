@@ -145,7 +145,7 @@ int main() {
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
           // Otherwise the values will be in between [-deg2rad(25), deg2rad(25] instead of [-1, 1].
           msgJson["steering_angle"] = steer_value/deg2rad(25);
-          msgJson["throttle"] = std::abs(throttle_value);
+          msgJson["throttle"] = throttle_value;
 
           //Display the MPC predicted trajectory
           vector<double> mpc_x_vals;
