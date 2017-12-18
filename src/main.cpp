@@ -100,7 +100,17 @@ int main() {
           double px = j[1]["x"];
           double py = j[1]["y"];
           double psi = j[1]["psi"];
-          //the given psi is between [0,2pi]. set boundaries @ [-pi,pi]
+          //transform the coordinates in ptsx and ptsy using px,py and psi.
+          for (size_t i = 0; i < ptsx.size(); i++){
+            double point_x = ptsx[i] - px;
+            double point_y = ptsy[i] - py;
+            ptsx[i] = cos(psi)*point_x + sin(psi)*point_y;
+            ptsy[i] = cos(psi)*point_y - sin(psi)*point_x;
+          }
+          //px, py is now at the origin and psi is 0
+          px = 0;
+          py = 0;
+          psi = 0;
           double v = j[1]["speed"];
           std::cout<<"Car Position: ("<<px<<","<<py<<")"<<std::endl;
           std::cout<<"Psi: "<<psi<<std::endl;
