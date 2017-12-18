@@ -161,7 +161,7 @@ int main() {
 
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Green line
-          for (size_t i = 0; i < 30; i++) {
+          for (size_t i = 0; i < 5; i++) {
             std::cout << "Iteration " << i << std::endl;
 
             auto vars = mpc.Solve(state, coeffs);
