@@ -150,20 +150,55 @@ int main() {
           //Display the MPC predicted trajectory
           vector<double> mpc_x_vals;
           vector<double> mpc_y_vals;
+          vector<double> poly_x_vals;
+          /*std::vector<double> psi_vals;
+          std::vector<double> v_vals;
+          std::vector<double> cte_vals;
+          std::vector<double> epsi_vals;
+          std::vector<double> delta_vals;
+          std::vector<double> a_vals;*/
 
 
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Green line
+          for (size_t i = 0; i < iters; i++) {
+            std::cout << "Iteration " << i << std::endl;
+
+            auto vars = mpc.Solve(state, coeffs);
+
+            mpc_x_vals.push_back(vars[0]);
+            mpc_y_vals.push_back(vars[1]);
+            poly_x_vals.push_back(polyeval(coeffs, vars[1]));
+            /*psi_vals.push_back(vars[2]);
+            v_vals.push_back(vars[3]);
+            cte_vals.push_back(vars[4]);
+            epsi_vals.push_back(vars[5]);
+
+            delta_vals.push_back(vars[6]);
+            a_vals.push_back(vars[7]);*/
+
+            state << vars[0], vars[1], vars[2], vars[3], vars[4], vars[5];
+            /*std::cout << "x = " << vars[0] << std::endl;
+            std::cout << "y = " << vars[1] << std::endl;
+            std::cout << "psi = " << vars[2] << std::endl;
+            std::cout << "v = " << vars[3] << std::endl;
+            std::cout << "cte = " << vars[4] << std::endl;
+            std::cout << "epsi = " << vars[5] << std::endl;
+            std::cout << "delta = " << vars[6] << std::endl;
+            std::cout << "a = " << vars[7] << std::endl;
+            std::cout << std::endl;*/
+          }
 
           msgJson["mpc_x"] = mpc_x_vals;
           msgJson["mpc_y"] = mpc_y_vals;
 
           //Display the waypoints/reference line
-          vector<double> next_x_vals;
-          vector<double> next_y_vals;
+          vector<double> next_x_vals = poly_x_vals;
+          vector<double> next_y_vals = mpc_y_vals;
 
           //.. add (x,y) points to list here, points are in reference to the vehicle's coordinate system
           // the points in the simulator are connected by a Yellow line
+
 
           msgJson["next_x"] = next_x_vals;
           msgJson["next_y"] = next_y_vals;
