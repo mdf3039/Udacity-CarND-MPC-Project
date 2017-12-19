@@ -139,10 +139,10 @@ int main() {
           * Both are in between [-1, 1].
           *
           */
-          int N = 30;
+          int N = 100;
           //set the number of samples used based on velocity
           if (v<10){
-            N = 50;
+            N = 100;
           }
           double steer_value;
           double throttle_value;
