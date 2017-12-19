@@ -6,7 +6,7 @@
 using CppAD::AD;
 
 // TODO: Set the timestep length and duration
-size_t N = 100;
+size_t N = 200;
 double dt = 0.1;
 
 // This value assumes the model presented in the classroom is used.
@@ -55,7 +55,7 @@ class FG_eval {
 
     //set the number of samples used based on velocity
     if (vars[v_start]<10){
-        N = 100;
+        N = 200;
     }
     // Reference State Cost
     // TODO: Define the cost related the reference state and
@@ -158,7 +158,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 
   //set the number of samples used based on velocity
   if (v<10){
-    N = 100;
+    N = 200;
   }
 
   // TODO: Set the number of model variables (includes both states and inputs).
