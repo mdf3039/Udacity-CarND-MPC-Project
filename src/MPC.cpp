@@ -75,7 +75,7 @@ class FG_eval {
 
     // Minimize the value gap between sequential actuations.
     for (size_t t = 0; t < N - 2; t++) {
-      fg[0] += 1500*CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
+      fg[0] += 2500*CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
       fg[0] += CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
     }
 
@@ -131,12 +131,12 @@ class FG_eval {
 
       // TODO: Setup the rest of the model constraints
       if (delta0!=0){
-        fg[1 + x_start + t] = x1 - (x0 + v0/psi0*(CppAD::sin(psi0+delta0*dt)-sin(psi0)));
-        fg[1 + y_start + t] = y1 - (y0 + v0/psi0*(-1*CppAD::cos(psi0+delta0*dt)+cos(psi0)));
+        fg[1 + x_start + t] = x1 - (x0 + v0/psi0*(CppAD::sin(psi0+delta0*dt)-sin(psi0))+.5*dt*dt*CppAD::cos(psi0)*a0);
+        fg[1 + y_start + t] = y1 - (y0 + v0/psi0*(-1*CppAD::cos(psi0+delta0*dt)+cos(psi0))+.5*dt*dt*CppAD::sin(psi0)*a0);
       }
       else{
-        fg[1 + x_start + t] = x1 - (x0 + v0 * CppAD::cos(psi0) * dt);
-        fg[1 + y_start + t] = y1 - (y0 + v0 * CppAD::sin(psi0) * dt);
+        fg[1 + x_start + t] = x1 - (x0 + v0 * CppAD::cos(psi0) * dt +.5*dt*dt*CppAD::cos(psi0)*a0);
+        fg[1 + y_start + t] = y1 - (y0 + v0 * CppAD::sin(psi0) * dt +.5*dt*dt*CppAD::sin(psi0)*a0);
       }
       fg[1 + psi_start + t] = psi1 - (psi0 + v0 * delta0 / Lf * dt);
       fg[1 + v_start + t] = v1 - (v0 + a0 * dt);
