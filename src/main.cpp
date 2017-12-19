@@ -146,10 +146,10 @@ int main() {
           * Both are in between [-1, 1].
           *
           */
-          int N = 10;
+          int N = 50;
           //set the number of samples used based on velocity
           if (v<10){
-            N = 10;
+            N = 50;
           }
           double steer_value;
           double throttle_value;
@@ -168,8 +168,8 @@ int main() {
           std::copy(est_x.begin(), est_x.end(), std::ostream_iterator<double>(std::cout, ", "));
           std::cout<<" "<<endl;*/
           //use the 6th and 7th values as the steer and throttle values
-          steer_value = 0.05;//est_delta[0];
-          throttle_value = 0.5;//est_a[0];
+          steer_value = est_delta[0];
+          throttle_value = est_a[0];
           std::cout<<"Steer Value: "<<steer_value<<endl;
           std::cout<<"Throttle Value: "<<throttle_value<<endl;
           std::cout<<"Steer Value/25deg: "<<steer_value/deg2rad(25)<<endl;
