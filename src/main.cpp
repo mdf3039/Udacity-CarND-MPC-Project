@@ -141,7 +141,7 @@ int main() {
           */
           int N = 30;
           //set the number of samples used based on velocity
-          if (vars[v_start]<10){
+          if (v<10){
             N = 100;
           }
           double steer_value;

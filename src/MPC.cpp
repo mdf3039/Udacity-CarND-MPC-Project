@@ -157,7 +157,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   double epsi = state[5];
 
   //set the number of samples used based on velocity
-  if (vars[v_start]<10){
+  if (v<10){
     N = 100;
   }
 
