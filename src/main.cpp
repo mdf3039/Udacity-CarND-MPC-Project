@@ -142,7 +142,7 @@ int main() {
           int N = 30;
           //set the number of samples used based on velocity
           if (v<10){
-            N = 100;
+            N = 50;
           }
           double steer_value;
           double throttle_value;

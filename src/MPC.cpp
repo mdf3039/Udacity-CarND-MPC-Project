@@ -55,7 +55,7 @@ class FG_eval {
 
     //set the number of samples used based on velocity
     if (vars[v_start]<10){
-        N = 100;
+        N = 50;
     }
     // Reference State Cost
     // TODO: Define the cost related the reference state and
@@ -158,7 +158,7 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
 
   //set the number of samples used based on velocity
   if (v<10){
-    N = 100;
+    N = 50;
   }
 
   // TODO: Set the number of model variables (includes both states and inputs).
