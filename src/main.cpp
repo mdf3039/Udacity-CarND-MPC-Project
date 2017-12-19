@@ -140,6 +140,10 @@ int main() {
           *
           */
           int N = 30;
+          //set the number of samples used based on velocity
+          if (vars[v_start]<10){
+            N = 100;
+          }
           double steer_value;
           double throttle_value;
           //solve the mpc for the next state

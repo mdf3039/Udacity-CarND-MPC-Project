@@ -53,6 +53,10 @@ class FG_eval {
     // Any additions to the cost should be added to `fg[0]`.
     fg[0] = 0;
 
+    //set the number of samples used based on velocity
+    if (vars[v_start]<10){
+        N = 100;
+    }
     // Reference State Cost
     // TODO: Define the cost related the reference state and
     // any anything you think may be beneficial.
@@ -151,6 +155,11 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   double v = state[3];
   double cte = state[4];
   double epsi = state[5];
+
+  //set the number of samples used based on velocity
+  if (vars[v_start]<10){
+    N = 100;
+  }
 
   // TODO: Set the number of model variables (includes both states and inputs).
   // For example: If the state is a 4 element vector, the actuators is a 2
