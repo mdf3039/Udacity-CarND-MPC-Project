@@ -107,6 +107,13 @@ int main() {
             ptsx[i] = cos(psi)*point_x + sin(psi)*point_y;
             ptsy[i] = cos(psi)*point_y - sin(psi)*point_x;
           }
+          //print out new ptsx and ptsy
+          std::cout<<"ptsx: ";
+          std::copy(ptsx.begin(), ptsx.end(), std::ostream_iterator<double>(std::cout, ", "));
+          std::cout<<" "<<endl;
+          std::cout<<"ptsy: ";
+          std::copy(ptsy.begin(), ptsy.end(), std::ostream_iterator<double>(std::cout, ", "));
+          std::cout<<" "<<endl;
           //px, py is now at the origin and psi is 0
           px = 0;
           py = 0;
