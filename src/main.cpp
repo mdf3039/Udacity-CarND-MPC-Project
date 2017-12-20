@@ -87,7 +87,7 @@ int main() {
           // j[1] is the data JSON object
           vector<double> ptsx = j[1]["ptsx"];
           vector<double> ptsy = j[1]["ptsy"];
-          std::cout<<"Number of waypointsX: "<<ptsx.size()<<std::endl;
+          /*std::cout<<"Number of waypointsX: "<<ptsx.size()<<std::endl;
           double minX = *std::min_element(ptsx.begin(), ptsx.end());
           double maxX = *std::max_element(ptsx.begin(), ptsx.end());
           std::cout<<"Minimum of waypointsX: "<<minX<<std::endl;
@@ -96,10 +96,20 @@ int main() {
           double minY = *std::min_element(ptsy.begin(), ptsy.end());
           double maxY = *std::max_element(ptsy.begin(), ptsy.end());
           std::cout<<"Minimum of waypointsY: "<<minY<<std::endl;
-          std::cout<<"Maximum of waypointsY: "<<maxY<<std::endl;
+          std::cout<<"Maximum of waypointsY: "<<maxY<<std::endl;*/
           double px = j[1]["x"];
           double py = j[1]["y"];
           double psi = j[1]["psi"];
+          double v = j[1]["speed"]*0.44704;
+          double steering_angle = j[1]["steering_angle"];
+          double throttle = j[1]["throttle"];
+          double delta_t = .1;
+          const double Lf = 2.67;
+          //update the point to be 100ms from now given the values
+          px = px + v*cos(psi)*delta_t;
+          py = py + v*sin(psi)*delta_t;
+          psi = psi + v*steering_angle*delta_t/Lf;
+          v = v + throttle*dt;
           //transform the coordinates in ptsx and ptsy using px,py and psi.
           for (size_t i = 0; i < ptsx.size(); i++){
             double point_x = ptsx[i] - px;
@@ -108,19 +118,18 @@ int main() {
             ptsy[i] = cos(psi)*point_y - sin(psi)*point_x;
           }
           //print out new ptsx and ptsy
-          std::cout<<"ptsx: ";
+          /*std::cout<<"ptsx: ";
           std::copy(ptsx.begin(), ptsx.end(), std::ostream_iterator<double>(std::cout, ", "));
           std::cout<<" "<<endl;
           std::cout<<"ptsy: ";
           std::copy(ptsy.begin(), ptsy.end(), std::ostream_iterator<double>(std::cout, ", "));
-          std::cout<<" "<<endl;
+          std::cout<<" "<<endl;*/
           //px, py is now at the origin and psi is 0
           px = 0;
           py = 0;
           psi = 0;
-          double v = j[1]["speed"];
-          std::cout<<"Car Position: ("<<px<<","<<py<<")"<<std::endl;
-          std::cout<<"Psi: "<<psi<<std::endl;
+          //std::cout<<"Car Position: ("<<px<<","<<py<<")"<<std::endl;
+          //std::cout<<"Psi: "<<psi<<std::endl;
           //convert ptsx and ptsy into eigen vectors
           Eigen::VectorXd xvals = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(ptsx.data(), ptsx.size());
           Eigen::VectorXd yvals = Eigen::Map<Eigen::VectorXd, Eigen::Unaligned>(ptsy.data(), ptsy.size());
@@ -138,7 +147,7 @@ int main() {
           double oe = psi - atan(polyeval(der_coeffs,px));
           //set up state vector
           Eigen::VectorXd state(6);
-          state << px, py, psi, v*0.44704, cte, oe;
+          state << px, py, psi, v, cte, oe;
 
           /*
           * TODO: Calculate steering angle and throttle using MPC.
