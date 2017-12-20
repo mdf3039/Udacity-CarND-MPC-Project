@@ -63,7 +63,7 @@ class FG_eval {
     // The part of the cost based on the reference state.
     for (size_t t = 0; t < N; t++) {
       fg[0] += 170*CppAD::pow(vars[cte_start + t], 2);
-      fg[0] += 140*CppAD::pow(vars[epsi_start + t], 2);
+      fg[0] += 1400*CppAD::pow(vars[epsi_start + t], 2);
       fg[0] += 100*CppAD::pow(vars[v_start + t] - ref_v, 2);
     }
 
@@ -214,8 +214,8 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // Acceleration/decceleration upper and lower limits.
   // NOTE: Feel free to change this to something else.
   for (size_t i = a_start; i < n_vars; i++) {
-    vars_lowerbound[i] = -1.0;
-    vars_upperbound[i] = 1.0;
+    vars_lowerbound[i] = -10.0;
+    vars_upperbound[i] = 10.0;
   }
 
   // Lower and upper limits for the constraints

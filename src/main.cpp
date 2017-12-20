@@ -110,7 +110,7 @@ int main() {
           px = px + v*cos(psi)*delta_t;
           py = py + v*sin(psi)*delta_t;
           psi = psi + v*steering_angle*delta_t/Lf;
-          v = v + throttle*delta_t;
+          v = v + throttle;
           //transform the coordinates in ptsx and ptsy using px,py and psi.
           for (size_t i = 0; i < ptsx.size(); i++){
             double point_x = ptsx[i] - px;
@@ -179,7 +179,7 @@ int main() {
           std::cout<<" "<<endl;*/
           //use the 6th and 7th values as the steer and throttle values
           steer_value = est_delta[0];
-          throttle_value = est_a[0];
+          throttle_value = est_a[0]/10;
           std::cout<<"Steer Value: "<<steer_value<<endl;
           std::cout<<"Throttle Value: "<<throttle_value<<endl;
           std::cout<<"Steer Value/25deg: "<<steer_value/deg2rad(25)<<endl;
