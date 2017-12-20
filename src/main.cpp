@@ -100,7 +100,8 @@ int main() {
           double px = j[1]["x"];
           double py = j[1]["y"];
           double psi = j[1]["psi"];
-          double v = j[1]["speed"]*0.44704;
+          double v = j[1]["speed"];
+          v = v * 0.44704;
           double steering_angle = j[1]["steering_angle"];
           double throttle = j[1]["throttle"];
           double delta_t = .1;
@@ -109,7 +110,7 @@ int main() {
           px = px + v*cos(psi)*delta_t;
           py = py + v*sin(psi)*delta_t;
           psi = psi + v*steering_angle*delta_t/Lf;
-          v = v + throttle*dt;
+          v = v + throttle*delta_t;
           //transform the coordinates in ptsx and ptsy using px,py and psi.
           for (size_t i = 0; i < ptsx.size(); i++){
             double point_x = ptsx[i] - px;
