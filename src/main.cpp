@@ -138,7 +138,7 @@ int main() {
           double oe = psi - atan(polyeval(der_coeffs,px));
           //set up state vector
           Eigen::VectorXd state(6);
-          state << px, py, psi, v, cte, oe;
+          state << px, py, psi, v*0.44704, cte, oe;
 
           /*
           * TODO: Calculate steering angle and throttle using MPC.
@@ -146,7 +146,7 @@ int main() {
           * Both are in between [-1, 1].
           *
           */
-          int N = 100;
+          int N = 10;
           //set the number of samples used based on velocity
           /*if (v<10){
             N = 50;
