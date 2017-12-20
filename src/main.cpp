@@ -107,8 +107,17 @@ int main() {
           double delta_t = .1;
           const double Lf = 2.67;
           //update the point to be 100ms from now given the values
-          px = px + v*cos(psi)*delta_t;
-          py = py + v*sin(psi)*delta_t;
+          //px = px + v*cos(psi)*delta_t;
+          //py = py + v*sin(psi)*delta_t;
+          a0 = throttle/delta_t
+          if (steering_angle!=0){
+            px = px + v/psi*(sin(psi+steering_angle*delta_t)-sin(psi))+.5*delta_t*delta_t*cos(psi)*a0;
+            py = py + v/psi*(-1*cos(psi+steering_angle*delta_t)+cos(psi))+.5*delta_t*delta_t*sin(psi)*a0;
+          }
+          else{
+            px = px + v * cos(psi) * delta_t +.5*delta_t*delta_t*cos(psi)*a0;
+            py = py + v * sin(psi) * delta_t +.5*delta_t*delta_t*sin(psi)*a0;
+          }
           psi = psi + v*steering_angle*delta_t/Lf;
           v = v + throttle;
           //transform the coordinates in ptsx and ptsy using px,py and psi.
@@ -179,7 +188,7 @@ int main() {
           std::cout<<" "<<endl;*/
           //use the 6th and 7th values as the steer and throttle values
           steer_value = est_delta[0];
-          throttle_value = est_a[0]/10;
+          throttle_value = est_a[0]/20;
           std::cout<<"Steer Value: "<<steer_value<<endl;
           std::cout<<"Throttle Value: "<<throttle_value<<endl;
           std::cout<<"Steer Value/25deg: "<<steer_value/deg2rad(25)<<endl;
