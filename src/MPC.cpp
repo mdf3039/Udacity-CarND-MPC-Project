@@ -76,7 +76,7 @@ class FG_eval {
     // Minimize the value gap between sequential actuations.
     for (size_t t = 0; t < N - 2; t++) {
       fg[0] += 2500*CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
-      fg[0] += CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+      fg[0] += 2500*CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
     }
 
     //
@@ -214,8 +214,8 @@ vector<double> MPC::Solve(Eigen::VectorXd state, Eigen::VectorXd coeffs) {
   // Acceleration/decceleration upper and lower limits.
   // NOTE: Feel free to change this to something else.
   for (size_t i = a_start; i < n_vars; i++) {
-    vars_lowerbound[i] = -20.0;
-    vars_upperbound[i] = 20.0;
+    vars_lowerbound[i] = -40.0;
+    vars_upperbound[i] = 40.0;
   }
 
   // Lower and upper limits for the constraints
