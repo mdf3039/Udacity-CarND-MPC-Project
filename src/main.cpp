@@ -188,7 +188,7 @@ int main() {
           std::cout<<" "<<endl;*/
           //use the 6th and 7th values as the steer and throttle values
           steer_value = est_delta[0];
-          throttle_value = est_a[0]/30;
+          throttle_value = est_a[0]/20;
           std::cout<<"Steer Value: "<<steer_value<<endl;
           std::cout<<"Throttle Value: "<<throttle_value<<endl;
           std::cout<<"Steer Value/25deg: "<<steer_value/deg2rad(25)<<endl;
