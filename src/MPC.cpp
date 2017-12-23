@@ -130,7 +130,7 @@ class FG_eval {
       // these to the solver.
 
       // TODO: Setup the rest of the model constraints
-      if (delta0!=0){
+      if (1==0){
         fg[1 + x_start + t] = x1 - (x0 + v0/psi0*(CppAD::sin(psi0+delta0*dt)-sin(psi0))+.5*dt*dt*CppAD::cos(psi0)*a0);
         fg[1 + y_start + t] = y1 - (y0 + v0/psi0*(-1*CppAD::cos(psi0+delta0*dt)+cos(psi0))+.5*dt*dt*CppAD::sin(psi0)*a0);
       }

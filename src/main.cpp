@@ -110,7 +110,7 @@ int main() {
           //px = px + v*cos(psi)*delta_t;
           //py = py + v*sin(psi)*delta_t;
           double a0 = throttle/delta_t;
-          if (steering_angle!=0){
+          if (1==0){
             px = px + v/psi*(sin(psi+steering_angle*delta_t)-sin(psi))+.5*delta_t*delta_t*cos(psi)*a0;
             py = py + v/psi*(-1*cos(psi+steering_angle*delta_t)+cos(psi))+.5*delta_t*delta_t*sin(psi)*a0;
           }
