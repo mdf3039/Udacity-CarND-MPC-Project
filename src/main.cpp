@@ -165,7 +165,7 @@ int main() {
           * Both are in between [-1, 1].
           *
           */
-          int N = 4;
+          int N = 7;
           //set the number of samples used based on velocity
           /*if (v<10){
             N = 50;
