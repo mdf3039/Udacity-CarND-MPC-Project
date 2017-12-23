@@ -197,7 +197,7 @@ int main() {
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
           // Otherwise the values will be in between [-deg2rad(25), deg2rad(25] instead of [-1, 1].
-          msgJson["steering_angle"] = -0.0001;//steer_value/deg2rad(25);
+          msgJson["steering_angle"] = -0.001;//steer_value/deg2rad(25);
           msgJson["throttle"] = .1;//throttle_value;
 
           //Display the MPC predicted trajectory
