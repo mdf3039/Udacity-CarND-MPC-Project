@@ -188,7 +188,9 @@ int main() {
           std::cout<<" "<<endl;*/
           //use the 6th and 7th values as the steer and throttle values
           steer_value = est_delta[0];
-          throttle_value = est_a[0]/40;
+          //a constant throttle of v*.0113 gives approximately a constant v.
+          //add or subtract acceleration from this
+          throttle_value = est_v[0]*0.0113 + est_a[0]/40;
           std::cout<<"Steer Value: "<<steer_value<<endl;
           std::cout<<"Throttle Value: "<<throttle_value<<endl;
           std::cout<<"Steer Value/25deg: "<<steer_value/deg2rad(25)<<endl;
@@ -197,8 +199,8 @@ int main() {
           json msgJson;
           // NOTE: Remember to divide by deg2rad(25) before you send the steering value back.
           // Otherwise the values will be in between [-deg2rad(25), deg2rad(25] instead of [-1, 1].
-          msgJson["steering_angle"] = -0.01;//steer_value/deg2rad(25);
-          msgJson["throttle"] = .15;//throttle_value;
+          msgJson["steering_angle"] = steer_value/deg2rad(25);
+          msgJson["throttle"] = throttle_value;
 
           //Display the MPC predicted trajectory
           vector<double> mpc_x_vals = est_x;
