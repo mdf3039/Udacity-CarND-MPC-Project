@@ -6,7 +6,7 @@
 using CppAD::AD;
 
 // TODO: Set the timestep length and duration
-size_t N = 5;
+size_t N = 7;
 double dt = 0.1;
 
 // This value assumes the model presented in the classroom is used.
@@ -23,7 +23,7 @@ const double Lf = 2.67;
 
 // Both the reference cross track and orientation errors are 0.
 // The reference velocity is set to 40 mph.
-double ref_v = 40*0.44704;
+double ref_v = 25*0.44704;
 
 // The solver takes all the state variables and actuator
 // variables in a singular vector. Thus, we should to establish
@@ -62,7 +62,7 @@ class FG_eval {
     // any anything you think may be beneficial.
     // The part of the cost based on the reference state.
     for (size_t t = 0; t < N; t++) {
-      fg[0] += 400*CppAD::pow(vars[cte_start + t], 2);
+      fg[0] += 170*CppAD::pow(vars[cte_start + t], 2);
       fg[0] += 100*CppAD::pow(vars[epsi_start + t], 2);
       fg[0] += 100*CppAD::pow(vars[v_start + t] - ref_v, 2);
     }
@@ -76,7 +76,7 @@ class FG_eval {
     // Minimize the value gap between sequential actuations.
     for (size_t t = 0; t < N - 2; t++) {
       fg[0] += 15000*CppAD::pow(vars[delta_start + t + 1] - vars[delta_start + t], 2);
-      fg[0] += 7500*CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
+      fg[0] += 2500*CppAD::pow(vars[a_start + t + 1] - vars[a_start + t], 2);
     }
 
     //
